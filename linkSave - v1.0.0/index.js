@@ -1,3 +1,8 @@
+/*
+saveLink
+version: 1.0.1
+created by: Felipe Fernandes
+*/
 const navbar = document.querySelector('#navbar')
 var ListLink = []
 const tableLink = document.querySelector('#tableLink')
@@ -8,7 +13,10 @@ if (localStorage.getItem('ListLink')) {
     }
 } else {
     localStorage.setItem('ListLink', 'n/a')
-    alert('Bem-vindo ao SaveLink! Ao usar nosso programa você concorda em permitir o uso de dados e cookies para o funcionamento da aplicação.')
+    const form = formGenerator()
+    addBlockFormGenerator(titleForm('Bem-vindo!'), 0)
+    addBlockFormGenerator(paragraphForm('Bem-vindo ao SaveLink! Ao usar nosso programa você concorda em permitir o uso de dados e cookies para o funcionamento da aplicação.'), 0)
+    addBlockFormGenerator(buttonForm('Aceito'), 0)
 }
 
 navbar.addEventListener('click', navbarOptions)
@@ -32,36 +40,31 @@ function updateListLink() {
 
 function formWhereUserAddLink() {
     var name, link
-    function writeName() {
-        while (true) {
-            name = window.prompt('Digite o nome do atalho:')
-            if (name) {
-                writeLink()
-                break
-            } else if (name == false) {
-                alert('Nome inválido!')
-            } else if (name == null) {
-                break
-            }
-        }
-    } writeName()
+    const form = formGenerator()
+    addBlockFormGenerator(paragraphForm('Nome:'), 0)
+    name = inputForm('text')
+    addBlockFormGenerator(name, 0)
 
-    function writeLink() {
-        while (true) {
-            link = window.prompt('Digite o link do atalho:')
-            if (link) {
-                ListLink.push([name, link])
-                updateListLink()
-                eraseTableLink()
-                createTableLink()
-                break
-            } else if (link == false) {
-                alert('Link inválido!')
-            } else if (link == null) {
-                break
-            }
+    addBlockFormGenerator(paragraphForm('Link:'), 0)
+    link = inputForm('text')
+    addBlockFormGenerator(link, 0)
+    const box = boxForm()
+    addBlockFormGenerator(box, 0)
+    box.appendChild(buttonForm('Adicionar', () => {
+        name = name.value
+        link = link.value
+        if (name == '' || link == '') {
+            const form = formGenerator()
+            addBlockFormGenerator(titleForm('Valor inválido!'), 0)
+            addBlockFormGenerator(buttonForm('Ok'), 0)
+        } else {
+            ListLink.push([name, link])
+            updateListLink()
+            eraseTableLink()
+            createTableLink()
         }
-    }
+    }))
+    box.appendChild(buttonForm('Cancelar'))
 }
 
 function formDeleteLink() {
@@ -85,7 +88,12 @@ function formDeleteLink() {
     }
 
     function deleteLink(link) {
-        if (window.confirm(`Tem certeza que deseja apagar o atalho "${link.target.innerHTML}"?`)) {
+        const form = formGenerator()
+        addBlockFormGenerator(titleForm('AVISO!'), 0)
+        addBlockFormGenerator(paragraphForm(`Tem certeza que deseja apagar o atalho "${link.target.innerHTML}"?`), 0)
+        const box = boxForm()
+        addBlockFormGenerator(box, 0)
+        box.appendChild(buttonForm('Ok', () => {
             for (i = 0; i < ListLink.length; i++) {
                 if (link.target.innerHTML == ListLink[i][0]) {
                     ListLink.splice(ListLink.indexOf(ListLink[i]), 1)
@@ -95,17 +103,24 @@ function formDeleteLink() {
                 }
             }
             deleteEffectOff()
-        } else {
+        }))
+        box.appendChild(buttonForm('Cancelar', () => {
             deleteEffectOff()
-        }
+        }))
     }
 }
 
 function formDeleteDataUser() {
-    if (window.confirm('Deseja excluir os seus dados? Depois que essa ação for feita não poderá ser desfeita.')) {
+    const form = formGenerator()
+    addBlockFormGenerator(titleForm('AVISO!'), 0)
+    addBlockFormGenerator(paragraphForm('Deseja excluir os seus dados? Depois que essa ação for feita não poderá ser desfeita.'), 0)
+    const box = boxForm()
+    addBlockFormGenerator(box, 0)
+    box.appendChild(buttonForm('Ok', () => {
         localStorage.removeItem('ListLink')
         location.reload()
-    }
+    }))
+    box.appendChild(buttonForm('Cancelar'))
 }
 
 function createTableLink() {
