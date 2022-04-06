@@ -1,0 +1,90 @@
+* {
+    font-family: sans-serif;
+    margin: 0px;
+
+    scroll-behavior: smooth;
+}
+
+header {
+    padding: 10px;
+}
+
+#navbar {
+    margin: 5px;
+
+    user-select: none;
+}
+
+#navbar > input {
+    background-color: rgb(0, 187, 255);
+
+    margin: 5px 8px;
+    padding: 5px 10px;
+
+    border: none;
+    border-radius: 4px;
+
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3), inset -2px -3px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+#navbar > input:hover {
+    transform: scale(1.04, 1.04);
+}
+
+#navbar > input:active {
+    transform: scale(.9, .9);
+}
+
+main {
+    margin: 5px 10px;
+}
+
+#tableLink {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.nameLink {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}
+
+.boxLink {
+    width: 100px;
+    height: 100px;
+    padding: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+.boxLink:hover {
+    background-color: rgba(0, 225, 255, 0.2);
+
+    animation-name: float;
+    animation-duration: .1s;
+    animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.boxIconLink {
+    width: 50px;
+}
+
+.boxIconLink > img {
+    width: inherit;
+}
+
+@keyframes float {
+    from {
+        transform: translateY(5px);
+    } to {
+        transform: translateY(0px);
+    }
+}
